@@ -1,111 +1,115 @@
-# Stockroom Inventory Management
+# GALA – Inventory Management System
 
-A small inventory management application with a Flask REST API, a React admin
-portal, and an Open Food Facts product lookup. Inventory is stored in a Python
-list in memory, so it resets when the API server restarts.
+GALA is an inventory management application built with a Flask REST API and a React frontend. It helps users manage inventory, monitor stock levels, and retrieve product information through external product databases.
 
-## Project layout
+## Technology Stack
+
+- **Backend:** Python, Flask, Flask-CORS
+- **Frontend:** React, Vite, Tailwind CSS
+- **Icons:** Lucide React
+- **External APIs:** Open Food Facts and USDA FoodData Central
+- **Data Storage:** In-memory Python list
+
+## Project Structure
 
 ```text
 inventory_backend/
-  app.py                 Flask API and Open Food Facts integration
-  requirements.txt       Python dependencies
-  tests/                 API and CLI tests
+  app.py
+  inventory.py
+  external_api.py
+  requirements.txt
+
 inventory_frontend/
-  src/App.jsx            React inventory portal
-  src/index.css          Portal styles
+  src/
+    components/
+    services/
+    App.jsx
+    index.css
+    main.jsx
 ```
 
-## Run the application
+## Getting Started
 
-### 1. Start the Flask API
+### 1. Backend Setup
 
-In a terminal, from the project root:
+Navigate to the backend:
 
 ```bash
 cd inventory_backend
-python -m venv .venv
-source .venv/bin/activate
-python -m pip install -r requirements.txt
+```
+
+Activate the existing virtual environment:
+
+```bash
+source venv/bin/activate
+```
+
+Install dependencies:
+
+```bash
+pip install -r requirements.txt
+```
+
+Start the Flask server:
+
+```bash
 python app.py
 ```
 
-The API listens at `http://127.0.0.1:5000`. On Windows, activate the virtual
-environment with `.venv\Scripts\activate` instead.
+Backend runs at:
 
-### 2. Start the React portal
+`http://127.0.0.1:5555`
 
-In another terminal:
+### 2. Frontend Setup
+
+Open another terminal:
 
 ```bash
 cd inventory_frontend
+```
+
+Install dependencies:
+
+```bash
 npm install
+```
+
+Start the development server:
+
+```bash
 npm run dev
 ```
 
-Open the local URL printed by Vite. The frontend uses
-`http://127.0.0.1:5000` by default. To use a different backend, create
-`inventory_frontend/.env.local` and set `VITE_API_URL`, for example:
+Open the URL provided by Vite, normally:
 
-```text
-VITE_API_URL=http://127.0.0.1:5000
-```
+`http://localhost:5173`
 
-## REST API
+## REST API Endpoints
 
-All responses use JSON except for the successful delete response, which has an
-empty body.
+| Method | Endpoint | Description |
+|---|---|---|
+| GET | `/` | API welcome message |
+| GET | `/inventory` | Retrieve all products |
+| GET | `/inventory/<id>` | Retrieve one product |
+| POST | `/inventory` | Add a product |
+| PATCH | `/inventory/<id>` | Update a product |
+| DELETE | `/inventory/<id>` | Delete a product |
+| GET | `/products/search?barcode=<code>` | Search by barcode |
+| GET | `/products/search?name=<name>` | Search by product name |
 
-| Method | Route | Description |
-| --- | --- | --- |
-| `GET` | `/` | Check that the API is running |
-| `GET` | `/inventory` | List all inventory items |
-| `GET` | `/inventory/<id>` | Get one item |
-| `POST` | `/inventory` | Add an item |
-| `PATCH` | `/inventory/<id>` | Update one or more item fields |
-| `DELETE` | `/inventory/<id>` | Delete an item |
-| `GET` | `/inventory/search?query=<barcode-or-name>` | Search Open Food Facts |
+## External Product Search
 
-An item requires a non-empty `name`, a non-negative numeric `price`, and a
-non-negative whole-number `quantity`. Optional fields are `brand`, `category`,
-`barcode`, `ingredients_text`, and `image_url`.
+StockWise integrates two external product data sources:
 
-Create an item:
+- **Open Food Facts:** Barcode-based product lookup.
+- **USDA FoodData Central:** Product name search for branded food products.
 
-```bash
-curl -X POST http://127.0.0.1:5000/inventory \
-  -H "Content-Type: application/json" \
-  -d '{"name":"Organic Almond Milk","brand":"Silk","category":"Drinks","price":4.99,"quantity":12}'
-```
+A USDA API key can be configured using the `USDA_API_KEY` environment variable.
 
-Update stock:
+## Data Storage
 
-```bash
-curl -X PATCH http://127.0.0.1:5000/inventory/1 \
-  -H "Content-Type: application/json" \
-  -d '{"quantity":20}'
-```
+The current application uses an in-memory Python list to store inventory records. Inventory data resets when the Flask server restarts.
 
-Search by barcode or name:
+## Author
 
-```bash
-curl "http://127.0.0.1:5000/inventory/search?query=organic%20almond%20milk"
-```
-
-The search endpoint returns the matching product details; add those details
-through `POST /inventory` to save them in the in-memory inventory.
-
-## Tests and frontend checks
-
-From `inventory_backend` with its virtual environment activated:
-
-```bash
-python -m pytest
-```
-
-From `inventory_frontend`:
-
-```bash
-npm run lint
-npm run build
-```
+Felix Ouma
