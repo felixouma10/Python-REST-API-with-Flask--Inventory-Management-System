@@ -28,7 +28,7 @@ function Navbar() {
 
           <div className="hidden sm:block">
             <p className="text-sm font-medium text-stone-800">
-              Administrator
+              Felix Ouma
             </p>
             <p className="text-xs text-stone-500">
               System Admin
