@@ -1,6 +1,6 @@
-# StockWise – Inventory Management System
+# GALA – Inventory Management System
 
-StockWise is an inventory management application built with a Flask REST API and a React frontend. It helps users manage inventory, monitor stock levels, and retrieve product information through external product databases.
+GALA is an inventory management application built with a Flask REST API and a React frontend. It helps users manage inventory, monitor stock levels, and retrieve product information through external product databases.
 
 ## Technology Stack
 
@@ -110,9 +110,6 @@ A USDA API key can be configured using the `USDA_API_KEY` environment variable.
 
 The current application uses an in-memory Python list to store inventory records. Inventory data resets when the Flask server restarts.
 
-## Future Improvements
+## Author
 
-- Persistent database integration.
-- User authentication and role management.
-- Stock alerts and low-stock notifications.
-- Inventory reporting and analytics.
+Felix Ouma
