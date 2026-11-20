@@ -221,13 +221,31 @@ function InventoryList({ products, setProducts }) {
                       )}
                     </td>
 
-                    <td className="px-5 py-4 min-w-24 text-sm text-stone-700">
-                      {isEditing ? (
-                        editInput("quantity", editForm.quantity, "number")
-                      ) : (
-                        product.quantity
-                      )}
-                    </td>
+                                          <td className="px-5 py-4 min-w-36">
+                        {isEditing ? (
+                          editInput("quantity", editForm.quantity, "number")
+                        ) : (
+                          <div className="flex flex-col gap-2">
+                            <span className="text-sm font-medium text-stone-700">
+                              {product.quantity}
+                            </span>
+
+                            {Number(product.quantity) === 0 ? (
+                              <span className="w-fit px-2.5 py-1 rounded-full text-xs font-semibold bg-red-100 text-red-700">
+                                Out of Stock
+                              </span>
+                            ) : Number(product.quantity) <= 10 ? (
+                              <span className="w-fit px-2.5 py-1 rounded-full text-xs font-semibold bg-amber-100 text-amber-700">
+                                Low Stock
+                              </span>
+                            ) : (
+                              <span className="w-fit px-2.5 py-1 rounded-full text-xs font-semibold bg-green-100 text-green-700">
+                                In Stock
+                              </span>
+                            )}
+                          </div>
+                        )}
+                      </td>
 
                     <td className="px-5 py-4 min-w-32 text-sm font-semibold text-[#4A3025]">
                       KSh {stockValue.toLocaleString("en-KE")}
