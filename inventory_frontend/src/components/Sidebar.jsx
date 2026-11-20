@@ -23,7 +23,7 @@ function Sidebar({ activePage, setActivePage }) {
         </div>
 
         <div>
-          <h2 className="font-bold text-lg">StockWise</h2>
+          <h2 className="font-bold text-lg">GALA</h2>
           <p className="text-xs text-stone-300">
             Inventory System
           </p>
