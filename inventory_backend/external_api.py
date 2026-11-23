@@ -1,5 +1,9 @@
 import os
 import requests
+from dotenv import load_dotenv
+
+# Load environment variables from the backend .env file
+load_dotenv()
 
 BASE_URL = "https://world.openfoodfacts.org"
 
@@ -41,7 +45,10 @@ def search_by_barcode(barcode):
 def search_by_name(name):
     url = "https://api.nal.usda.gov/fdc/v1/foods/search"
 
-    api_key = os.getenv("USDA_API_KEY", "DEMO_KEY")
+    api_key = os.getenv("USDA_API_KEY")
+
+    if not api_key:
+        raise RuntimeError("USDA_API_KEY is not configured")
 
     params = {
         "api_key": api_key,
