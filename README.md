@@ -1,36 +1,92 @@
-# GALA – Inventory Management System
+# GALA Inventory Management System
 
-GALA is an inventory management application built with a Flask REST API and a React frontend. It helps users manage inventory, monitor stock levels, and retrieve product information through external product databases.
+GALA is an inventory management application built with **Python, Flask, React and Vite**. It helps businesses manage products, monitor stock levels, track inventory value and retrieve product information from external databases.
 
-## Technology Stack
+## 1. Technologies Used
 
-- **Backend:** Python, Flask, Flask-CORS
-- **Frontend:** React, Vite, Tailwind CSS
-- **Icons:** Lucide React
-- **External APIs:** Open Food Facts and USDA FoodData Central
-- **Data Storage:** In-memory Python list
+**Backend**
+- Python
+- Flask
+- Flask-CORS
+- Requests
+- python-dotenv
 
-## Project Structure
+**Frontend**
+- React
+- Vite
+- JavaScript
+- Tailwind CSS
+- Lucide React
+
+**External APIs**
+- USDA FoodData Central
+- OpenFoodFacts
+
+## 2. Key Features
+
+- Dashboard displaying total products, stock quantity and inventory value.
+- Add, view, update and delete inventory products.
+- Low-stock and out-of-stock alerts.
+- Search products by name using USDA FoodData Central.
+- Search products by barcode using OpenFoodFacts.
+- Select external products and populate the inventory form.
+- Add retrieved products to the local inventory.
+
+## 3. Project Structure
 
 ```text
-inventory_backend/
-  app.py
-  inventory.py
-  external_api.py
-  requirements.txt
-
-inventory_frontend/
-  src/
-    components/
-    services/
-    App.jsx
-    index.css
-    main.jsx
+Python-REST-API-with-Flask--Inventory-Management-System/
+│
+├── inventory_backend/
+│   ├── app.py
+│   ├── inventory.py
+│   ├── external_api.py
+│   ├── requirements.txt
+│   ├── .env
+│   └── .gitignore
+│
+├── inventory_frontend/
+│   ├── src/
+│   │   ├── components/
+│   │   ├── services/
+│   │   └── App.jsx
+│   ├── package.json
+│   └── ...
+│
+└── README.md
 ```
 
-## Getting Started
+## 4. API Endpoints
 
-### 1. Backend Setup
+| Method | Endpoint | Description |
+|---|---|---|
+| GET | `/inventory` | Retrieve all products |
+| GET | `/inventory/<product_id>` | Retrieve one product |
+| POST | `/inventory` | Add a product |
+| PATCH | `/inventory/<product_id>` | Update a product |
+| DELETE | `/inventory/<product_id>` | Delete a product |
+| GET | `/products/search?name=milk` | Search by product name |
+| GET | `/products/search?barcode=...` | Search by barcode |
+
+Backend address: `http://127.0.0.1:5555`
+
+## 5. Installation and Setup
+
+### Prerequisites
+
+- Python 3.8 or later
+- Node.js and npm
+- Git
+
+### Clone the Repository
+
+```bash
+git clone https://github.com/felixouma10/Python-REST-API-with-Flask--Inventory-Management-System.git
+
+cd Python-REST-API-with-Flask--Inventory-Management-System
+```
+
+### Backend Setup
 
 Navigate to the backend:
 
@@ -38,9 +94,10 @@ Navigate to the backend:
 cd inventory_backend
 ```
 
-Activate the existing virtual environment:
+Create and activate a virtual environment:
 
 ```bash
+python3 -m venv venv
 source venv/bin/activate
 ```
 
@@ -50,7 +107,21 @@ Install dependencies:
 pip install -r requirements.txt
 ```
 
-Start the Flask server:
+### Configure Environment Variables
+
+Create a `.env` file inside `inventory_backend/`:
+
+```env
+USDA_API_KEY=your_usda_api_key
+```
+
+Get an API key from:
+
+https://fdc.nal.usda.gov/api-key-signup/
+
+The `.env` file is excluded from Git to protect sensitive information.
+
+### Run the Backend
 
 ```bash
 python app.py
@@ -60,9 +131,9 @@ Backend runs at:
 
 `http://127.0.0.1:5555`
 
-### 2. Frontend Setup
+### Frontend Setup
 
-Open another terminal:
+Open a second terminal and navigate to the frontend:
 
 ```bash
 cd inventory_frontend
@@ -80,35 +151,22 @@ Start the development server:
 npm run dev
 ```
 
-Open the URL provided by Vite, normally:
+Frontend runs at:
 
 `http://localhost:5173`
 
-## REST API Endpoints
+## 6. Testing
 
-| Method | Endpoint | Description |
-|---|---|---|
-| GET | `/` | API welcome message |
-| GET | `/inventory` | Retrieve all products |
-| GET | `/inventory/<id>` | Retrieve one product |
-| POST | `/inventory` | Add a product |
-| PATCH | `/inventory/<id>` | Update a product |
-| DELETE | `/inventory/<id>` | Delete a product |
-| GET | `/products/search?barcode=<code>` | Search by barcode |
-| GET | `/products/search?name=<name>` | Search by product name |
+The following functionality has been manually tested:
 
-## External Product Search
+- Flask backend and API routes.
+- Inventory CRUD operations.
+- USDA product name search.
+- OpenFoodFacts barcode search.
+- External product selection and inventory entry.
+- Frontend and backend communication.
 
-StockWise integrates two external product data sources:
-
-- **Open Food Facts:** Barcode-based product lookup.
-- **USDA FoodData Central:** Product name search for branded food products.
-
-A USDA API key can be configured using the `USDA_API_KEY` environment variable.
-
-## Data Storage
-
-The current application uses an in-memory Python list to store inventory records. Inventory data resets when the Flask server restarts.
+Both external API integrations returned successful responses during testing.
 
 ## Author
 
