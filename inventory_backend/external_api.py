@@ -4,7 +4,7 @@ import requests
 BASE_URL = "https://world.openfoodfacts.org"
 
 HEADERS = {
-    "User-Agent": "StockWiseInventory/1.0"
+    "User-Agent": "GALAInventory/1.0"
 }
 
 
@@ -41,7 +41,7 @@ def search_by_barcode(barcode):
 def search_by_name(name):
     url = "https://api.nal.usda.gov/fdc/v1/foods/search"
 
-    api_key = os.getenv("JMKnQKR6hMmJzNDwwDL9ftJmtF8w89BmgLKMRwrF", "DEMO_KEY")
+    api_key = os.getenv("USDA_API_KEY", "DEMO_KEY")
 
     params = {
         "api_key": api_key,
